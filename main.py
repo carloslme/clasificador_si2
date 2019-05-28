@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, jsonify, flash, request, redirect, url_for, send_from_directory
+from flask import Flask, jsonify, flash, request, redirect, url_for, send_from_directory, Response
 import base64
 import os, json
 from werkzeug.utils import secure_filename
@@ -18,6 +18,7 @@ def allowed_file(filename):
 
 @app.route('/subirImagen', methods=['GET', 'POST'])
 def upload_file():
+    resp = Response(status=200, mimetype='application/json')
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -43,15 +44,16 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file',
                                     filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
+    return resp
+    # '''
+    # <!doctype html>
+    # <title>Upload new File</title>
+    # <h1>Upload new File</h1>
+    # <form method=post enctype=multipart/form-data>
+    #   <input type=file name=file>
+    #   <input type=submit value=Upload>
+    # </form>
+    # '''
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
