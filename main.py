@@ -3,10 +3,12 @@ from flask import Flask, jsonify, flash, request, redirect, url_for, send_from_d
 import base64
 import os, json
 from werkzeug.utils import secure_filename
+from os.path import isfile, join
 
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -60,6 +62,12 @@ def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
 
+@app.route('/allUploads/')
+def uploaded_files():
+        arr = os.listdir(app.config['UPLOAD_FOLDER'])
+        print (arr)
+        return jsonify(arr)
+
 tasks = [
     {
         'id': 1,
@@ -78,9 +86,6 @@ tasks = [
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
 def get_tasks():
     return jsonify({'tasks': tasks})
-
-
-    
 
 if __name__ == '__main__':
     app.run(debug=True)
