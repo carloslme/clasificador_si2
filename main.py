@@ -1,8 +1,9 @@
 #!flask/bin/python
 from flask import Flask, jsonify, flash, request, redirect, url_for, send_from_directory
 import base64
-import os
+import os, json
 from werkzeug.utils import secure_filename
+
 
 UPLOAD_FOLDER = 'uploads'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
