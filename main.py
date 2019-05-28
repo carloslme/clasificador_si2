@@ -15,7 +15,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/recibirImagenes', methods=['GET', 'POST'])
+@app.route('/subirImagen', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -25,7 +25,7 @@ def upload_file():
             <!doctype html>
             <title>Error al subir el archivo</title>
             <h1>No se ha seleccionado ningún archivo</h1>
-            '''
+            ''' 
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
