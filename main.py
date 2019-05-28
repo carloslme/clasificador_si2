@@ -68,6 +68,14 @@ def uploaded_files():
         print (arr)
         return jsonify(arr)
 
+
+@app.route('/remove/<name>', methods=['DELETE'])
+def remove_file(name):
+        arr = os.listdir(app.config['UPLOAD_FOLDER'])
+        print (arr)
+        os.remove("uploads/"+name) 
+        return 'Borrado exitoso'
+
 tasks = [
     {
         'id': 1,
